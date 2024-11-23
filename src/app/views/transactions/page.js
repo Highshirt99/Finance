@@ -14,7 +14,7 @@ const Transactions = () => {
     {
       name: "Aishat Akinyemi",
       category: "Groceries",
-      date: "27-10-2024",
+      date: "5-8-2024",
       amount: 1200,
       id: 1,
     },

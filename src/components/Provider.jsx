@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Sidebar from "./Sidebar";
 import MobileSidebar from "./MobileSidebar";
+import { allBudgets } from "@/app/views/budgets/page ";
 
 export const AppContext = createContext();
 
 export default function Provider({ children }) {
   const [activeMenu, setActiveMenu] = useState(1);
   const [minimizeMenu, setMinimizeMenu] = useState(true);
+  const [budgets, setBudgets] = useState(allBudgets);
   const [token, setToken] = useState(null);
-  
 
   const queryClient = new QueryClient();
 
@@ -49,8 +50,8 @@ export default function Provider({ children }) {
           setMinimizeMenu,
           token,
           setToken,
-         
-         
+          budgets,
+          setBudgets,
         }}
       >
         <Sidebar />

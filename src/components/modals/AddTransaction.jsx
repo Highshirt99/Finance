@@ -4,49 +4,50 @@ import { IoMdClose } from "react-icons/io";
 import { useForm, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
 
+export const transactionCategories = [
+  {
+    name: "Entertainment",
+    id: 1,
+  },
+  {
+    name: "Bills",
+    id: 2,
+  },
+  {
+    name: "Groceries",
+    id: 3,
+  },
+  {
+    name: "DiningOut",
+    id: 4,
+  },
+  {
+    name: "Transportation",
+    id: 5,
+  },
+  {
+    name: "PersonalCare",
+    id: 6,
+  },
+  {
+    name: "Education",
+    id: 7,
+  },
+  {
+    name: "Lifestyle",
+    id: 8,
+  },
+  {
+    name: "Shopping",
+    id: 9,
+  },
+  {
+    name: "General",
+    id: 10,
+  },
+];
+
 const AddTransaction = ({ setTransactionModalOpen }) => {
-  const transactionCategories = [
-    {
-      name: "Entertainment",
-      id: 1,
-    },
-    {
-      name: "Bills",
-      id: 2,
-    },
-    {
-      name: "Groceries",
-      id: 3,
-    },
-    {
-      name: "DiningOut",
-      id: 4,
-    },
-    {
-      name: "Transportation",
-      id: 5,
-    },
-    {
-      name: "PersonalCare",
-      id: 6,
-    },
-    {
-      name: "Education",
-      id: 7,
-    },
-    {
-      name: "Lifestyle",
-      id: 8,
-    },
-    {
-      name: "Shopping",
-      id: 9,
-    },
-    {
-      name: "General",
-      id: 10,
-    },
-  ];
 
   const {
     register,
@@ -62,7 +63,7 @@ const AddTransaction = ({ setTransactionModalOpen }) => {
   };
 
   return (
-    <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
+    <div className="backdrop-blur-sm overflow-scroll max-md:mx-2 shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md  bottom-[80px] relative top-1">
         <div>
           <h1 className="font-[600]  text-[14px]">Add New Transaction</h1>
@@ -143,12 +144,12 @@ const AddTransaction = ({ setTransactionModalOpen }) => {
             <input
               type="number"
               placeholder="e.g. $1000"
-              {...register("amount", { required: true })}
+              {...register("max", { required: true })}
               className={`${
                 errors.amount ? " border-red-600" : "border-gray-300 "
               } border text-[12px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
             />
-            {errors.amount && (
+            {errors.max && (
               <p className=" font-medium text-red-600 text-[11px]">
                 Field is required.
               </p>

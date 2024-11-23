@@ -2,7 +2,6 @@
 import { useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { MdLogout } from "react-icons/md";
-import { AppContext } from "@/components/Provider ";
 import CurrentBalance from "@/components/CurrentBalance ";
 import Income from "@/components/Income ";
 import Expenses from "@/components/Expenses ";
@@ -14,7 +13,6 @@ import RecurringBills from "@/components/RecurringBills ";
 export default function Home() {
   const router = useRouter();
 
-  // const { token } = useContext(AppContext);
 
   useEffect(() => {
     const token = localStorage.getItem("account")
