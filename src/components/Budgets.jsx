@@ -1,9 +1,20 @@
+import { useContext } from "react";
 import { MdArrowRight } from "react-icons/md";
 import Link from "next/link";
 import { Chart } from "@/components/Chart ";
+import { getRandomColor } from "@/components/Chart ";
+import { AppContext } from "./Provider";
 
 const Budgets = () => {
+const { budgets } = useContext(AppContext);
 
+const chartData = budgets.length > 0 ? budgets.map((item) => {
+  return {
+    category: item.category,
+    budget: Number(item.max),
+    fill: getRandomColor(),
+  };
+}) : []
 
   return (
     <div className="bg-white rounded-md ">
@@ -18,7 +29,7 @@ const Budgets = () => {
       </div>
 
       <div className="flex flex-col justify-center lg:gap-48 lg:flex-row">
-        <Chart />
+        <Chart chartData = {chartData} />
         <div className=" flex gap-2 lg:flex-col  p-4 text-[10px]">
           <div className="flex items-center gap-2">
             <div className="w-1 h-[26px] bg-[#f2cdac]"></div>

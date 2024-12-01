@@ -5,16 +5,8 @@ import { AppContext } from "./Provider";
 import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 
+import { Card, CardContent } from "@/components/ui/card ";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card ";
-import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -22,49 +14,42 @@ import {
 
 export const description = "A donut chart with text";
 
+export function getRandomColor() {
+  // Generate a random integer between 0 and 16777215 (hexadecimal #FFFFFF)
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  // Pad with leading zeros if necessary and prepend with #
+  return `#${randomColor.padStart(6, "0")}`;
+}
 
-
-export function Chart() {
+export function Chart({ chartData }) {
   const { budgets } = React.useContext(AppContext);
+
+  const data = chartData?.map((item, index) => {
+    return {
+      [item.category]: {
+        label: item.category,
+        color: getRandomColor(),
+      },
+    };
+  });
+
   const totalBudgets = React.useMemo(() => {
-    return budgets.reduce((acc, curr) => acc + curr.max, 0);
+    return budgets.length > 0
+      ? budgets.reduce((acc, curr) => acc + Number(curr.max), 0)
+      : 0;
   }, [budgets]);
   const totalSpent = React.useMemo(() => {
-    return budgets.reduce((acc, curr) => acc + curr.spent, 0);
+    return budgets.length > 0
+      ? budgets.reduce((acc, curr) => acc + Number(curr.spent), 0)
+      : 0;
   }, [budgets]);
 
-
-  const chartData = [
-    { browser: "chrome", visitors:  budgets[0].max, fill: "var(--color-chrome)" },
-    { browser: "safari", visitors: budgets[1].max, fill: "var(--color-safari)" },
-    { browser: "firefox",visitors: budgets[2].max, fill: "var(--color-firefox)" },
-    // { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-    // { browser: "other", visitors: 190, fill: "var(--color-other)" },
-  ];
   const chartConfig = {
-    budgets: {
-      label: "budget",
+    budget: {
+      labels: budgets?.length > 0 ? budgets.map((item) => item.category) : [],
     },
-    chrome: {
-      label: budgets[0].category,
-      color: "hsl(var(--chart-1))",
-    },
-    safari: {
-      label: budgets[1].category,
-      color: "hsl(var(--chart-2))",
-    },
-    firefox: {
-      label: budgets[2].category,
-      color: "hsl(var(--chart-3))",
-    },
-    // edge: {
-    //   label: "Edge",
-    //   color: "hsl(var(--chart-4))",
-    // },
-    // other: {
-    //   label: "Other",
-    //   color: "hsl(var(--chart-5))",
-    // },
+
+    ...data,
   };
 
   return (
@@ -81,8 +66,8 @@ export function Chart() {
             />
             <Pie
               data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              dataKey="budget"
+              nameKey="category"
               innerRadius={60}
               strokeWidth={5}
             >

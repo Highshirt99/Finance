@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { transactionCategories } from "./AddTransaction";
 
-const AddBudget = ({ setBudgetModalOpen, budgets }) => {
+const AddBudget = ({ setBudgetModalOpen, budgets, setBudgets }) => {
   const {
     register,
     handleSubmit,
@@ -13,14 +13,19 @@ const AddBudget = ({ setBudgetModalOpen, budgets }) => {
 
   const onSubmit = (data) => {
     const newBudget = {
-      ...data, id:Math.floor(Math.random() * 1000), spent: 0    }
-      budgets.push(newBudget)
+      ...data,
+      id: Math.floor(Math.random() * 1000),
+      spent: 0,
+    };
+const allBudgets = [...budgets, newBudget]
+    setBudgets(allBudgets);
 
     setBudgetModalOpen(false);
 
     toast.success("Budget added successfully.");
   };
 
+  console.log(budgets);
   return (
     <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md  bottom-[80px] relative top-1">

@@ -12,7 +12,7 @@ export const AppContext = createContext();
 export default function Provider({ children }) {
   const [activeMenu, setActiveMenu] = useState(1);
   const [minimizeMenu, setMinimizeMenu] = useState(true);
-  const [budgets, setBudgets] = useState(allBudgets);
+  const [budgets, setBudgets] = useState([]);
   const [token, setToken] = useState(null);
 
   const queryClient = new QueryClient();
