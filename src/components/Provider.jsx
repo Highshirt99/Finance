@@ -13,6 +13,7 @@ export default function Provider({ children }) {
   const [activeMenu, setActiveMenu] = useState(1);
   const [minimizeMenu, setMinimizeMenu] = useState(true);
   const [budgets, setBudgets] = useState([]);
+  const [pots, setPots] = useState([]);
   const [token, setToken] = useState(null);
 
   const queryClient = new QueryClient();
@@ -52,6 +53,8 @@ export default function Provider({ children }) {
           setToken,
           budgets,
           setBudgets,
+          pots,
+          setPots,
         }}
       >
         <Sidebar />

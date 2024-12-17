@@ -2,13 +2,13 @@ import React from "react";
 import { IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { transactionCategories } from "./AddTransaction";
 
-const EditBudget = ({
+
+const EditPot = ({
   setShowMenu,
-  setEditBudgetModalOpen,
-  budget,
-  budgets,
+  setEditPotModalOpen,
+  pot,
+  pots,
 }) => {
   const {
     register,
@@ -17,11 +17,11 @@ const EditBudget = ({
   } = useForm({});
 
   const onSubmit = (data) => {
-    const index = budgets.findIndex((item) => item.id === budget.id);
-    budgets[index] = { ...budget, ...data };
+    const index = pots.findIndex((item) => item.id === pot.id);
+    pots[index] = { ...pot, ...data };
 
-    setEditBudgetModalOpen(null);
-    toast.success("Budget edited successfully.");
+    setEditPotModalOpen(null);
+    toast.success("Pot edited successfully.");
     setShowMenu(false);
   };
 
@@ -29,13 +29,13 @@ const EditBudget = ({
     <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] max-md:mx-2 bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md  bottom-[80px] relative top-1">
         <div>
-          <h1 className="font-[600]  text-[14px]">Edit Budget</h1>
+          <h1 className="font-[600]  text-[14px]">Edit Pot</h1>
           <IoMdClose
             className=" cursor-pointer w-[10px]  absolute top-3 right-5"
-            onClick={() => setEditBudgetModalOpen(false)}
+            onClick={() => setEditPotModalOpen(false)}
           />
           <span className="text-[10px] text-[#a8b1be]">
-          As your budgets change, feel free to update your spending limits.
+          If your saving targets change, feel free to update your pots.
           </span>
         </div>
 
@@ -43,46 +43,41 @@ const EditBudget = ({
           className="flex flex-col gap-2 mt-2"
           onSubmit={handleSubmit(onSubmit)}
         >
+       
+
           <div>
             <label className="font-[600]  text-[12px] text-gray-400">
-              Category
+              Pot Name
             </label>
-
-            <select
-              {...register("category", { required: true })}
-              defaultValue={budget.category}
+            <input
+              type="text"
+              placeholder="e.g. Rainy days"
+              defaultValue={pot.name}
+              {...register("name", { required: true })}
               className={`${
-                errors.status ? " border-red-600" : "border-gray-300  "
-              } border text-[12px] cursor-pointer text-gray-600  rounded-md p-2 outline-none w-full mt-1 focus:border-gray-700`}
-              placeholder="Select a category"
-            >
-              {transactionCategories.map((category) => (
-                <option key={category.id} value={category.name} className="">
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            {errors.category && (
+                errors.amount ? " border-red-600" : "border-gray-300 "
+              } border text-[12px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
+            />
+            {errors.name && (
               <p className=" font-medium text-red-600 text-[11px]">
                 Field is required.
               </p>
             )}
           </div>
-
           <div>
             <label className="font-[600]  text-[12px] text-gray-400">
-              Maximum spend
+              Target Amount
             </label>
             <input
               type="number"
               placeholder="e.g. $2000"
-              defaultValue={budget.max}
-              {...register("max", { required: true })}
+              defaultValue={pot.target}
+              {...register("target", { required: true })}
               className={`${
                 errors.amount ? " border-red-600" : "border-gray-300 "
               } border text-[12px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
             />
-            {errors.max && (
+            {errors.target && (
               <p className=" font-medium text-red-600 text-[11px]">
                 Field is required.
               </p>
@@ -98,4 +93,4 @@ const EditBudget = ({
   );
 };
 
-export default EditBudget;
+export default EditPot;

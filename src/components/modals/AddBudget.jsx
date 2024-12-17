@@ -25,7 +25,7 @@ const allBudgets = [...budgets, newBudget]
     toast.success("Budget added successfully.");
   };
 
-  console.log(budgets);
+
   return (
     <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md  bottom-[80px] relative top-1">
@@ -79,10 +79,10 @@ const allBudgets = [...budgets, newBudget]
               placeholder="e.g. $2000"
               {...register("max", { required: true })}
               className={`${
-                errors.amount ? " border-red-600" : "border-gray-300 "
+                errors.max ? " border-red-600" : "border-gray-300 "
               } border text-[12px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
             />
-            {errors.amount && (
+            {errors.max && (
               <p className=" font-medium text-red-600 text-[11px]">
                 Field is required.
               </p>

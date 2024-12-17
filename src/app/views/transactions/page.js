@@ -7,39 +7,40 @@ import { useDataTable } from "@/lib/data/useDataTable ";
 import { FaUser } from "react-icons/fa";
 import AddTransaction from "@/components/modals/AddTransaction ";
 
-const Transactions = () => {
-  // const { filteredCategory, setFilteredCategory} = useContext(AppContext);
 
-  const transactionsData = [
-    {
-      name: "Aishat Akinyemi",
-      category: "Groceries",
-      date: "5-8-2024",
-      amount: 1200,
-      id: 1,
-    },
-    {
-      name: "Test",
-      category: "Bills",
-      date: "12-10-2024",
-      amount: 400,
-      id: 2,
-    },
-    {
-      name: "Test Account",
-      category: "Entertainment",
-      date: "2-11-2024",
-      amount: 800,
-      id: 3,
-    },
-    {
-      name: "Zion Tech",
-      category: "Entertainment",
-      date: "2-10-2024",
-      amount: 1000,
-      id: 4,
-    },
-  ];
+
+export const transactionsData = [
+  {
+    name: "Aishat Akinyemi",
+    category: "Groceries",
+    date: "5-8-2024",
+    amount: 1200,
+    id: 1,
+  },
+  {
+    name: "Test",
+    category: "Bills",
+    date: "12-10-2024",
+    amount: 400,
+    id: 2,
+  },
+  {
+    name: "Test Account",
+    category: "Entertainment",
+    date: "2-11-2024",
+    amount: 800,
+    id: 3,
+  },
+  {
+    name: "Zion Tech",
+    category: "Entertainment",
+    date: "2-10-2024",
+    amount: 1000,
+    id: 4,
+  },
+];
+const Transactions = () => {
+
 
   const [filteredCategory, setFilteredCategory] = useState(transactionsData);
   const [transactionModalOpen, setTransactionModalOpen] = useState(false);
@@ -108,7 +109,7 @@ const Transactions = () => {
   return (
     <div className="lg:relative  left-[17%]  lg:w-3/4 lg:px-0 px-6 py-6 lg:py-12">
       <div className="flex items-center justify-between px-4">
-        <h1 className="text-2xl font-semibold">Transactions</h1>
+        <h1 className="text-3xl font-bold">Transactions</h1>
         <button
           className="bg-[#201f24] text-[10px] text-white p-3 font-bold rounded-md"
           onClick={() => setTransactionModalOpen(true)}

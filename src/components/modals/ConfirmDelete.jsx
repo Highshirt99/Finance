@@ -1,12 +1,12 @@
 import React from "react";
 
-const ConfirmDelete = ({ setShowDeleteModal, budget, deleteBudget }) => {
+const ConfirmDelete = ({ setShowDeleteModal, title, deleteItem, item, name }) => {
   return (
     <div className="backdrop-blur-sm overflow-scroll  shadow-md flex gap-3 justify-center items-center fixed inset-0 z-[50] max-md:mx-2 bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white p-4 rounded-lg flex flex-col gap-4 max-md:mx-6 lg:w-[350px]">
-          <p className="font-bold">Delete {budget.category}?</p>
+          <p className="font-bold">Delete {title}?</p>
           <span className="text-[#aab3c0] text-[10px] font-semibold">
-            Are you sure you want to delete this budget? This action cannot be
+            Are you sure you want to delete this {name}? This action cannot be
             reversed, and all the data inside it will be removed forever.
           </span>
           <button
@@ -17,7 +17,7 @@ const ConfirmDelete = ({ setShowDeleteModal, budget, deleteBudget }) => {
           </button>
           <button
             onClick={() => {
-              deleteBudget(budget.id);
+              deleteItem(item.id);
             }}
             className="w-full text-white p-3 text-center rounded-lg font-bold bg-[#c94736]  hover:bg-opacity-30"
           >

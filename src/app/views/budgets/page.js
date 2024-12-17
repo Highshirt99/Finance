@@ -9,6 +9,8 @@ import { BsThreeDots } from "react-icons/bs";
 import EditBudget from "@/components/modals/EditBudget ";
 import ConfirmDelete from "@/components/modals/ConfirmDelete ";
 import { getRandomColor } from "@/components/Chart ";
+import { transactionsData } from "../transactions/page";
+import { FaUser } from "react-icons/fa";
 
 const Budgets = () => {
   const [budgetModalOpen, setBudgetModalOpen] = useState(false);
@@ -18,6 +20,13 @@ const Budgets = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { budgets, setBudgets } = useContext(AppContext);
+
+  const getLatestTransactions = (budget) => {
+    const transactions = transactionsData.filter(
+      (item) => item.category === budget.category
+    );
+    return transactions;
+  };
 
   const chartData =
     budgets.length > 0
@@ -46,9 +55,9 @@ const Budgets = () => {
   };
 
   return (
-    <div className="lg:relative  left-[17%]  lg:w-3/4 lg:px-0 px-6 py-6 lg:py-12 my-8">
+    <div className="lg:relative  left-[17%]  lg:w-3/4 lg:px-0 px-6 py-6 lg:py-12">
       <div className="flex items-center justify-between px-4">
-        <h1 className="text-2xl font-semibold">Budgets</h1>
+        <h1 className="text-3xl font-bold">Budgets</h1>
         <button
           className="bg-[#201f24] text-[10px] text-white p-3 font-bold rounded-md"
           onClick={() => setBudgetModalOpen(true)}
@@ -139,9 +148,47 @@ const Budgets = () => {
                       </Link>
                     </div>
                   </div>
-                  <p className="mt-3 text-center text-sm text-[#696868]">
-                    You haven&apos;t made any spendings yet.
-                  </p>
+                  {getLatestTransactions(budget).length === 0 ? (
+                    <p className="mt-3 text-center text-sm text-[#696868]">
+                      You haven&apos;t made any spendings yet.
+                    </p>
+                  ) : (
+                    getLatestTransactions(budget).map((transaction, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between  mt-3"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="bg-red-600 text-white w-8 h-8 rounded-[50%] text-[10px] flex justify-center items-center">
+                            <FaUser />
+                          </div>
+                          <p className="text-[10px] font-bold">
+                            {transaction.name}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-1 items-center">
+                          <div
+                            className={`${
+                              transaction.amount < 0
+                                ? "text-[#d17561]"
+                                : "text-[#5e9891]"
+                            } flex items-center gap-1`}
+                          >
+                            <span>{transaction.amount < 0 ? "-" : "+"}</span>
+                            <p className="font-semibold">
+                              ${transaction.amount.toFixed(2)}
+                            </p>
+                          </div>
+
+                          <p className="text-[#696868] text-[10px]">
+                            {" "}
+                            {new Date(transaction.date).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
                 <div
                   className={`${
@@ -151,7 +198,7 @@ const Budgets = () => {
                   } shadow-md border w-[100px] text-[10px] absolute right-1 top-12 gap-3 hover p-4 rounded-md flex-col bg-white`}
                 >
                   <button
-                    className="cursor-pointer border-b pb-2"
+                    className="cursor-pointer border-b pb-2  font-bold"
                     onClick={() => {
                       handleEditBudgetModalOpen(budget.id);
                     }}
@@ -159,7 +206,7 @@ const Budgets = () => {
                     Edit Budget
                   </button>
                   <button
-                    className="cursor-pointer text-red-500"
+                    className="cursor-pointer text-red-500 font-bold"
                     onClick={() => setShowDeleteModal(true)}
                   >
                     Delete Budget
@@ -176,8 +223,10 @@ const Budgets = () => {
                 {showDeleteModal && (
                   <ConfirmDelete
                     setShowDeleteModal={setShowDeleteModal}
-                    deleteBudget={deleteBudget}
-                    budget={budget}
+                    deleteItem={deleteBudget}
+                    title={budget.category}
+                    name= "budget"
+                    item={budget}
                   />
                 )}
               </div>
@@ -185,7 +234,9 @@ const Budgets = () => {
           </div>
         </div>
       ) : (
-        <p className = "text-center mt-4">You have not made any budget, create a new one.</p>
+        <p className="text-center mt-4">
+          You have not made any budget, create a new one.
+        </p>
       )}
 
       {budgetModalOpen && (
