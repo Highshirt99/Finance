@@ -21,7 +21,7 @@ const EditPot = ({
     pots[index] = { ...pot, ...data };
 
     setEditPotModalOpen(null);
-    toast.success("Pot edited successfully.");
+    toast.success("Pot updated successfully.");
     setShowMenu(false);
   };
 

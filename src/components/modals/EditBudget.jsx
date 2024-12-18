@@ -21,7 +21,7 @@ const EditBudget = ({
     budgets[index] = { ...budget, ...data };
 
     setEditBudgetModalOpen(null);
-    toast.success("Budget edited successfully.");
+    toast.success("Budget updated successfully.");
     setShowMenu(false);
   };
 

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
 const AddMoney = ({ setAddMoneyModalOpen, pots, pot }) => {
+  const myWidth = ((pot.saved / pot.target) * 100).toFixed(2) + "%";
   const [amount, setAmount] = useState(0);
   const {
     register,
@@ -19,14 +20,14 @@ const AddMoney = ({ setAddMoneyModalOpen, pots, pot }) => {
       setAddMoneyModalOpen(false);
 
       toast.success("Money added successfully.");
-    } 
-    
-    else if (pot.saved + Number(amount) > pots[index].target) {
+    } else if (pot.saved + Number(amount) > pots[index].target) {
       toast.error("Amount exceeds target.");
     }
     setAmount(0);
   };
-  const myWidth = (pot.saved / pot.target* 100).toFixed(2) + "%";
+
+
+
   return (
     <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md  bottom-[80px] relative top-1">
@@ -66,9 +67,7 @@ const AddMoney = ({ setAddMoneyModalOpen, pots, pot }) => {
                 />
               </div>
               <div className="text-[10px] text-[#9d9a9b] flex justify-between my-4">
-                <span className="text-green-600">
-                  {((pot.saved / pot.target) * 100).toFixed(2)}%
-                </span>
+                <span className="text-green-600">{myWidth}</span>
                 <span>Target of ${Number(pot.target).toFixed(2)}</span>
               </div>
             </div>
@@ -83,6 +82,7 @@ const AddMoney = ({ setAddMoneyModalOpen, pots, pot }) => {
               {...register("amount", { required: true })}
               onChange={(e) => {
                 setAmount(e.target.value);
+              
               }}
               className={`${
                 errors.amount ? " border-red-600" : "border-gray-300 "

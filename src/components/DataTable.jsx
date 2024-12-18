@@ -22,6 +22,7 @@ const DataTable = ({
   handleSearch,
   handleSort,
   headers,
+  recurring
 }) => {
   const [sortType, setSortType] = useState("Latest");
   const [showSortList, setShowSortList] = useState(false);
@@ -129,7 +130,7 @@ const DataTable = ({
                       <div
                         className={`${
                           showSortList ? "block" : "hidden"
-                        } bg-white p-3 rounded-md absolute  top-4 lg:right-80 text-gray-500  shadow-md border flex flex-col gap-1 w-[120px]`}
+                        } bg-white p-3 rounded-md absolute right-40 top-4 lg:right-80 text-gray-500  shadow-md border flex flex-col gap-1 w-[120px]`}
                       >
                         {sortList.map((item) => (
                           <p
@@ -147,8 +148,8 @@ const DataTable = ({
                       </div>
                     </div>
 
-                    <div className="items-center gap-2 lg:flex ">
-                      <FaFilter
+                    { !recurring && <div className="items-center gap-2 lg:flex ">
+                     <FaFilter
                         onClick={() => {
                           setShowFilterList(!showFilterList);
                         }}
@@ -163,7 +164,7 @@ const DataTable = ({
                       >
                         <p>{category}</p>
                         <FaAngleDown className="text-[16px]" />
-                      </div>
+                      </div>    
                       <div
                         className={`${
                           showFilterList ? "block" : "hidden"
@@ -184,6 +185,7 @@ const DataTable = ({
                         ))}
                       </div>
                     </div>
+}
                   </form>
                 </div>
               </div>
