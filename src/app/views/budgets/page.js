@@ -9,7 +9,6 @@ import { BsThreeDots } from "react-icons/bs";
 import EditBudget from "@/components/modals/EditBudget ";
 import ConfirmDelete from "@/components/modals/ConfirmDelete ";
 import { getRandomColor } from "@/components/Chart ";
-import { transactionsData } from "../transactions/page";
 import { FaUser } from "react-icons/fa";
 
 const Budgets = () => {
@@ -19,7 +18,7 @@ const Budgets = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const { budgets, setBudgets } = useContext(AppContext);
+  const { budgets, setBudgets, transactionsData, setTransactionsData } = useContext(AppContext);
 
   const getLatestTransactions = (budget) => {
     const transactions = transactionsData.filter(

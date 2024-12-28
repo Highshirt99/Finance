@@ -47,7 +47,7 @@ export const transactionCategories = [
   },
 ];
 
-const AddTransaction = ({ setTransactionModalOpen }) => {
+const AddTransaction = ({ setTransactionModalOpen, transactionsData, setTransactionsData }) => {
 
   const {
     register,
@@ -56,7 +56,12 @@ const AddTransaction = ({ setTransactionModalOpen }) => {
   } = useForm({});
 
   const onSubmit = (data) => {
-    console.log(data);
+    const newTransaction = {
+      ...data,
+      id: Math.floor(Math.random() * 1000),
+    };
+const allTransactions = [...transactionsData, newTransaction]
+    setTransactionsData(allTransactions);
     setTransactionModalOpen(false);
 
     toast.success("Transaction added successfully.");
@@ -144,12 +149,12 @@ const AddTransaction = ({ setTransactionModalOpen }) => {
             <input
               type="number"
               placeholder="e.g. $1000"
-              {...register("max", { required: true })}
+              {...register("amount", { required: true })}
               className={`${
                 errors.amount ? " border-red-600" : "border-gray-300 "
               } border text-[12px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
             />
-            {errors.max && (
+            {errors.amount && (
               <p className=" font-medium text-red-600 text-[11px]">
                 Field is required.
               </p>

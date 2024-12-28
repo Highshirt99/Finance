@@ -9,47 +9,25 @@ import AddTransaction from "@/components/modals/AddTransaction ";
 
 
 
-export const transactionsData = [
-  {
-    name: "Aishat Akinyemi",
-    category: "Groceries",
-    date: "5-8-2024",
-    amount: 1200,
-    id: 1,
-  },
-  {
-    name: "Test",
-    category: "Bills",
-    date: "12-10-2024",
-    amount: 400,
-    id: 2,
-  },
-  {
-    name: "Test Account",
-    category: "Entertainment",
-    date: "2-11-2024",
-    amount: 800,
-    id: 3,
-  },
-  {
-    name: "Zion Tech",
-    category: "Entertainment",
-    date: "2-10-2024",
-    amount: 1000,
-    id: 4,
-  },
-];
+
 const Transactions = () => {
+  const {transactionsData, setTransactionsData} = useContext(AppContext)
 
 
   const [filteredCategory, setFilteredCategory] = useState(transactionsData);
   const [transactionModalOpen, setTransactionModalOpen] = useState(false);
 
+
+useEffect(() => {
+setFilteredCategory(transactionsData)
+
+}, [transactionsData])
+
   const filterByCategory = (category) => {
     if (category === "All Transactions") {
       setFilteredCategory(transactionsData);
     } else {
-      const filtered = transactionsData.filter(
+      const filtered = transactionsData?.filter(
         (item) => item.category === category
       );
 
@@ -58,7 +36,7 @@ const Transactions = () => {
   };
 
   const handleSearch = (keyword) => {
-    const filtered = transactionsData.filter((item) =>
+    const filtered = transactionsData?.filter((item) =>
       item.name.toLowerCase().includes(keyword.toLowerCase())
     );
 
@@ -143,8 +121,8 @@ const Transactions = () => {
           <tr key={transaction.id}>
             <td className="px-5 bg-white border-b border-gray-200 py-5text-sm">
               <div className="flex items-center">
-                <div className="flex items-center gap-3">
-                  <div className="bg-[#277c77] text-white flex justify-center items-center w-8 h-8 rounded-[50%] p-1">
+                <div className="flex items-center gap-4">
+                  <div className="bg-[#277c77] text-white text-[10px] flex justify-center items-center w-8 h-8 rounded-[50%] p-1">
                     <FaUser />
                   </div>
                   <p className="font-bold text-gray-900 whitespace-no-wrap">
@@ -177,7 +155,7 @@ const Transactions = () => {
       </DataTable>
 
       {transactionModalOpen && (
-        <AddTransaction setTransactionModalOpen={setTransactionModalOpen} />
+        <AddTransaction setTransactionModalOpen={setTransactionModalOpen} transactionsData = {transactionsData} setTransactionsData={setTransactionsData}/>
       )}
     </div>
   );

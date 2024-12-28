@@ -16,6 +16,8 @@ const Pots = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [addMoneyModalOpen, setAddMoneyModalOpen] = useState(false);
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
+
+  
   const { pots, setPots } = useContext(AppContext);
 
   const handleShowMenu = (id) => {
