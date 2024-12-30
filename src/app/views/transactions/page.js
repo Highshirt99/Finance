@@ -7,21 +7,15 @@ import { useDataTable } from "@/lib/data/useDataTable ";
 import { FaUser } from "react-icons/fa";
 import AddTransaction from "@/components/modals/AddTransaction ";
 
-
-
-
 const Transactions = () => {
-  const {transactionsData, setTransactionsData} = useContext(AppContext)
-
+  const { transactionsData, setTransactionsData } = useContext(AppContext);
 
   const [filteredCategory, setFilteredCategory] = useState(transactionsData);
   const [transactionModalOpen, setTransactionModalOpen] = useState(false);
 
-
-useEffect(() => {
-setFilteredCategory(transactionsData)
-
-}, [transactionsData])
+  useEffect(() => {
+    setFilteredCategory(transactionsData);
+  }, [transactionsData]);
 
   const filterByCategory = (category) => {
     if (category === "All Transactions") {
@@ -42,7 +36,6 @@ setFilteredCategory(transactionsData)
 
     setFilteredCategory(filtered);
   };
-
   const handleSort = (sortType) => {
     if (sortType === "A to Z") {
       setFilteredCategory(
@@ -62,7 +55,6 @@ setFilteredCategory(transactionsData)
       );
     }
   };
-
   const {
     currentPage,
     searchKeyword,
@@ -131,7 +123,7 @@ setFilteredCategory(transactionsData)
                 </div>
               </div>
             </td>
-            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+            <td className="px-5 py-5 text-sm bg-white border-b border-b-gray-200">
               <p className="text-gray-500 whitespace-no-wrap">
                 {transaction.category}
               </p>
@@ -146,8 +138,9 @@ setFilteredCategory(transactionsData)
               </p>
             </td>
             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-              <p className="text-[#277c77] whitespace-no-wrap">
-                ${transaction.amount}
+              <p className={`${transaction.amount < 0 ? "text-black" : "text-[#277c77]" } whitespace-no-wrap`}>
+                <span>{transaction.amount < 0 ? "-" : "+"}</span>$
+                {transaction.amount < 0 ? transaction.amount.slice(1) : transaction.amount}
               </p>
             </td>
           </tr>
@@ -155,7 +148,11 @@ setFilteredCategory(transactionsData)
       </DataTable>
 
       {transactionModalOpen && (
-        <AddTransaction setTransactionModalOpen={setTransactionModalOpen} transactionsData = {transactionsData} setTransactionsData={setTransactionsData}/>
+        <AddTransaction
+          setTransactionModalOpen={setTransactionModalOpen}
+          transactionsData={transactionsData}
+          setTransactionsData={setTransactionsData}
+        />
       )}
     </div>
   );
