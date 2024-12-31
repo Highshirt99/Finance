@@ -8,13 +8,12 @@ import { useDataTable } from "@/lib/data/useDataTable ";
 
 
 const RecurringBills = () => {
-  const {transactionsData, setTransactionsData} = useContext(AppContext)
-  
-  // console.log(transactionsData)
+  const {transactionsData} = useContext(AppContext)
 
   const recurringTransactions = transactionsData?.filter(
     (item) => item.recurring
   );
+  
   const [filteredCategory, setFilteredCategory] = useState(
     recurringTransactions
   );
@@ -47,7 +46,7 @@ const RecurringBills = () => {
     }
   };
 
-  const total = recurringTransactions.reduce((acc, curr) => {
+  const paidBills = recurringTransactions.reduce((acc, curr) => {
    return acc + Number(curr.amount)
   }, 0);
 
@@ -90,13 +89,13 @@ const RecurringBills = () => {
             <div className="py-3 flex justify-between border-b">
               <span className="text-[#8c9095] text-[10px]">Paid Bills</span>
               <span className="text-[#8f959a] text-[10px] font-bold">
-                ${total.toFixed(2)}
+                ${paidBills.toFixed(2)}
               </span>
             </div>
             <div className="py-3 flex justify-between border-b">
               <span className="text-[#8c9095] text-[10px]">Total Upcoming</span>
               <span className="text-[#8f959a] text-[10px] font-bold">
-              ${total.toFixed(2)}
+              $0.00
               </span>
             </div>
             <div className="py-3 flex justify-between border-b">
