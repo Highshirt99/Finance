@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import { AppContext } from './Provider';
+import React from 'react'
+import { useSelector } from 'react-redux';
 
 const CurrentBalance = () => {
-   const {transactionsData} = useContext(AppContext)
+  const transactionsData = useSelector(state => state.finance.user?.transactions)
 
     const totalTransaction = transactionsData.reduce(
       (prev, curr) => prev + Number(curr.amount),

@@ -1,14 +1,15 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { AppContext } from "@/components/Provider ";
+import {  useEffect, useState } from "react";
 import DataTable from "@/components/DataTable ";
 import { useDataTable } from "@/lib/data/useDataTable ";
 import { FaUser } from "react-icons/fa";
 import AddTransaction from "@/components/modals/AddTransaction ";
+import {useSelector} from "react-redux"
 
 const Transactions = () => {
-  const { transactionsData, setTransactionsData } = useContext(AppContext);
+  
+  const transactionsData = useSelector(state => state.finance.user?.transactions)
 
   const [filteredCategory, setFilteredCategory] = useState(transactionsData);
   const [transactionModalOpen, setTransactionModalOpen] = useState(false);
@@ -55,26 +56,7 @@ const Transactions = () => {
       );
     }
   };
-  const {
-    currentPage,
-    searchKeyword,
-    data: postsData,
-    isLoading,
-    isFetching,
-    searchKeywordHandler,
-    submitSearchKeywordHandler,
-    setCurrentPage,
-  } = useDataTable({
-    dataQueryFn: () => getAllPosts(searchKeyword, currentPage),
-    dataQueryKey: "posts",
-    deleteDataMessage: "Post is deleted",
-    mutateDeleteFn: ({ slug, token }) => {
-      return deletePost({
-        slug,
-        token,
-      });
-    },
-  });
+
 
   return (
     <div className="lg:relative  left-[17%]  lg:w-3/4 lg:px-0 px-6 py-6 lg:py-12">
@@ -89,9 +71,6 @@ const Transactions = () => {
       </div>
       <DataTable
         searchInputPlaceHolder="Search Transaction..."
-        searchKeywordOnSubmitHandler={submitSearchKeywordHandler}
-        searchKeywordOnChangeHandler={searchKeywordHandler}
-        searchKeyword={searchKeyword}
         handleFilter={filterByCategory}
         handleSearch={handleSearch}
         transactionsData={transactionsData}
@@ -102,14 +81,10 @@ const Transactions = () => {
           "Transaction Date",
           "Amount",
         ]}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        data={transactionsData}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        headers={transactionsData?.headers}
+       
+       
       >
-        {filteredCategory.map((transaction) => (
+        {filteredCategory?.map((transaction) => (
           <tr key={transaction.id}>
             <td className="px-5 bg-white border-b border-gray-200 py-5text-sm">
               <div className="flex items-center">
@@ -150,8 +125,7 @@ const Transactions = () => {
       {transactionModalOpen && (
         <AddTransaction
           setTransactionModalOpen={setTransactionModalOpen}
-          transactionsData={transactionsData}
-          setTransactionsData={setTransactionsData}
+        
         />
       )}
     </div>

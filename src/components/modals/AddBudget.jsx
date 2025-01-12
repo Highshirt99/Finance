@@ -3,8 +3,11 @@ import { IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { transactionCategories } from "./AddTransaction";
+import { addBudget } from "@/lib/redux/slice ";
+import { useDispatch } from "react-redux";
 
-const AddBudget = ({ setBudgetModalOpen, budgets, setBudgets }) => {
+const AddBudget = ({ setBudgetModalOpen }) => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -12,19 +15,12 @@ const AddBudget = ({ setBudgetModalOpen, budgets, setBudgets }) => {
   } = useForm({});
 
   const onSubmit = (data) => {
-    const newBudget = {
-      ...data,
-      id: Math.floor(Math.random() * 1000),
-      spent: 0,
-    };
-const allBudgets = [...budgets, newBudget]
-    setBudgets(allBudgets);
+    dispatch(addBudget(data));
 
     setBudgetModalOpen(false);
 
     toast.success("Budget added successfully.");
   };
-
 
   return (
     <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">

@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { AppContext } from "./Provider";
-import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 
 import { Card, CardContent } from "@/components/ui/card ";
@@ -11,6 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart ";
+import { useSelector } from "react-redux";
 
 export const description = "A donut chart with text";
 
@@ -22,7 +21,7 @@ export function getRandomColor() {
 }
 
 export function Chart({ chartData }) {
-  const { budgets } = React.useContext(AppContext);
+  const budgets = useSelector(state => state.finance.user.budgets)
 
   const data = chartData?.map((item, index) => {
     return {
@@ -84,7 +83,7 @@ export function Chart({ chartData }) {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          className="text-3xl font-bold fill-foreground"
                         >
                           ${totalSpent.toLocaleString()}
                         </tspan>

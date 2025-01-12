@@ -6,10 +6,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Sidebar from "./Sidebar";
 import MobileSidebar from "./MobileSidebar";
 import { allBudgets } from "@/app/views/budgets/page ";
+import { store } from "@/lib/redux/store ";
+import { Provider } from "react-redux";
 
 export const AppContext = createContext();
 
-export default function Provider({ children }) {
+export default function AppProvider({ children }) {
   const [activeMenu, setActiveMenu] = useState(1);
   const [minimizeMenu, setMinimizeMenu] = useState(true);
   const [budgets, setBudgets] = useState([]);
@@ -34,7 +36,9 @@ export default function Provider({ children }) {
         <body>
           <QueryClientProvider client={queryClient}>
             <AppContext.Provider value={{ token, setToken }}>
+              <Provider store={store}>
               {children}
+              </Provider>
             </AppContext.Provider>
           </QueryClientProvider>
         </body>
@@ -43,27 +47,31 @@ export default function Provider({ children }) {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppContext.Provider
-        value={{
-          activeMenu,
-          setActiveMenu,
-          minimizeMenu,
-          setMinimizeMenu,
-          token,
-          setToken,
-          budgets,
-          setBudgets,
-          pots,
-          setPots,
-          transactionsData,
-          setTransactionsData
-        }}
-      >
-        <Sidebar />
-        {children}
-        <MobileSidebar />
-      </AppContext.Provider>
-    </QueryClientProvider>
+   
+      <QueryClientProvider client={queryClient}>
+        <AppContext.Provider
+          value={{
+            activeMenu,
+            setActiveMenu,
+            minimizeMenu,
+            setMinimizeMenu,
+            token,
+            setToken,
+            budgets,
+            setBudgets,
+            pots,
+            setPots,
+            transactionsData,
+            setTransactionsData
+          }}
+        >
+           <Provider store={store}>
+          <Sidebar />
+          {children}
+          <MobileSidebar />
+          </Provider>
+        </AppContext.Provider>
+      </QueryClientProvider>
+    
   );
 }

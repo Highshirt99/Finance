@@ -1,6 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
-import { AppContext } from "@/components/Provider ";
+import {  useState } from "react";
 import { Chart } from "@/components/Chart ";
 import AddBudget from "@/components/modals/AddBudget ";
 import { MdArrowRight } from "react-icons/md";
@@ -10,15 +9,20 @@ import EditBudget from "@/components/modals/EditBudget ";
 import ConfirmDelete from "@/components/modals/ConfirmDelete ";
 import { getRandomColor } from "@/components/Chart ";
 import { FaUser } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteBudget } from "@/lib/redux/slice ";
+
 
 const Budgets = () => {
+  const dispatch = useDispatch()
   const [budgetModalOpen, setBudgetModalOpen] = useState(false);
   const [EditBudgetModalOpen, setEditBudgetModalOpen] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const { budgets, setBudgets, transactionsData, setTransactionsData } = useContext(AppContext);
+  const  budgets  = useSelector(state => state.finance.user.budgets);
+  const  transactionsData  = useSelector(state => state.finance.user.transactions);
 
   const getLatestTransactions = (budget) => {
     const transactions = transactionsData.filter(
@@ -28,7 +32,7 @@ const Budgets = () => {
   };
 
   const chartData =
-    budgets.length > 0
+    budgets?.length > 0
       ? budgets.map((item) => {
           return {
             category: item.category,
@@ -47,9 +51,8 @@ const Budgets = () => {
     setEditBudgetModalOpen(id);
   };
 
-  const deleteBudget = (id) => {
-    const filtered = budgets?.filter((item) => item.id !== id);
-    setBudgets(filtered);
+  const handleDeleteBudget = (id) => {
+    dispatch(deleteBudget(id))
     setShowDeleteModal(false);
   };
 
@@ -65,14 +68,14 @@ const Budgets = () => {
         </button>
       </div>
       {budgets?.length > 0 ? (
-        <div className="flex gap-8 max-md:flex-col my-12  ">
+        <div className="flex gap-8 my-12 max-md:flex-col ">
           <div className="flex flex-col bg-[#fff] max-md:w-full h-fit justify-center w-[30%] rounded-md p-6  ">
             <Chart chartData={chartData} />
             <h4 className="font-bold text-[16px]">Spending Summary</h4>
             <div className="mt-3">
-              {budgets.map((budget) => (
+              {budgets?.map((budget) => (
                 <div
-                  className="flex items-center justify-between mb-2 border-b border-b-gray-300 pb-3"
+                  className="flex items-center justify-between pb-3 mb-2 border-b border-b-gray-300"
                   key={budget.id}
                 >
                   <div className="flex items-center gap-3">
@@ -93,16 +96,16 @@ const Budgets = () => {
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-4 w-full ">
-            {budgets.map((budget) => (
+          <div className="flex flex-col w-full gap-4 ">
+            {budgets?.map((budget) => (
               <div
                 key={budget.id}
-                className="bg-white rounded-lg p-4 flex flex-col gap-4 relative"
+                className="relative flex flex-col gap-4 p-4 bg-white rounded-lg"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-4 h-4 rounded-full bg-[#934f6f]" />
-                    <p className=" font-bold">{budget.category}</p>
+                    <p className="font-bold ">{budget.category}</p>
                   </div>
                   <BsThreeDots
                     onClick={() => {
@@ -138,7 +141,7 @@ const Budgets = () => {
                 </div>
 
                 <div className="bg-[#f8f4f0] p-4 rounded-md">
-                  <div className="flex justify-between items-center">
+                  <div className="flex items-center justify-between">
                     <p className="font-bold">Latest Spending</p>
                     <div className="flex items-center gap-1 text-[11px]">
                       <p className="text-[#696868]">See All</p>
@@ -155,7 +158,7 @@ const Budgets = () => {
                     getLatestTransactions(budget).map((transaction, index) => (
                       <div
                         key={index}
-                        className="flex items-center justify-between  mt-3"
+                        className="flex items-center justify-between mt-3"
                       >
                         <div className="flex items-center gap-3">
                           <div className="bg-red-600 text-white w-8 h-8 rounded-[50%] text-[10px] flex justify-center items-center">
@@ -166,7 +169,7 @@ const Budgets = () => {
                           </p>
                         </div>
 
-                        <div className="flex flex-col gap-1 items-center">
+                        <div className="flex flex-col items-center gap-1">
                           <div
                             className={`${
                               transaction.amount < 0
@@ -197,7 +200,7 @@ const Budgets = () => {
                   } shadow-md border w-[100px] text-[10px] absolute right-1 top-12 gap-3 hover p-4 rounded-md flex-col bg-white`}
                 >
                   <button
-                    className="cursor-pointer border-b pb-2  font-bold"
+                    className="pb-2 font-bold border-b cursor-pointer"
                     onClick={() => {
                       handleEditBudgetModalOpen(budget.id);
                     }}
@@ -205,7 +208,7 @@ const Budgets = () => {
                     Edit Budget
                   </button>
                   <button
-                    className="cursor-pointer text-red-500 font-bold"
+                    className="font-bold text-red-500 cursor-pointer"
                     onClick={() => setShowDeleteModal(true)}
                   >
                     Delete Budget
@@ -222,7 +225,7 @@ const Budgets = () => {
                 {showDeleteModal && (
                   <ConfirmDelete
                     setShowDeleteModal={setShowDeleteModal}
-                    deleteItem={deleteBudget}
+                    deleteItem={handleDeleteBudget}
                     title={budget.category}
                     name= "budget"
                     item={budget}
@@ -233,7 +236,7 @@ const Budgets = () => {
           </div>
         </div>
       ) : (
-        <p className="text-center mt-4">
+        <p className="mt-4 text-center">
           You have not made any budget, create a new one.
         </p>
       )}
@@ -242,7 +245,7 @@ const Budgets = () => {
         <AddBudget
           budgets={budgets}
           setBudgetModalOpen={setBudgetModalOpen}
-          setBudgets={setBudgets}
+       
         />
       )}
     </div>

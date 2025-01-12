@@ -9,21 +9,25 @@ import Pots from "@/components/Pots ";
 import Transactions from "@/components/Transactions ";
 import Budgets from "@/components/Budgets ";
 import RecurringBills from "@/components/RecurringBills ";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "@/lib/redux/slice ";
 
 export default function Home() {
   const router = useRouter();
+  const token = useSelector((state) => state.finance.token)
 
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const token = localStorage.getItem("account")
+
     if (!token) {
       router.push("/auth/login", { scroll: false });
     }
     router.push("/", { scroll: false });
-  }, [router]);
+  }, [router, token]);
 
   const logout = () => {
-    localStorage.removeItem("account");
+    dispatch(removeUser);
     router.push("/auth/login", { scroll: false });
   };
 

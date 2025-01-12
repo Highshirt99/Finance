@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import { AppContext } from './Provider';
+import React from 'react'
+import { useSelector } from 'react-redux';
 
 const Expenses = () => {
-  const {transactionsData} = useContext(AppContext)
+  const transactionsData = useSelector(state => state.finance.user?.transactions)
   const expenses = transactionsData?.filter((item) => Number(item.amount) < 0)
   const totalExpenses = expenses.reduce(
     (prev, curr) => prev + Number(curr.amount.slice(1)),

@@ -1,15 +1,15 @@
-import { useContext } from "react";
 import { MdArrowRight } from "react-icons/md";
 import Link from "next/link";
 import { Chart } from "@/components/Chart ";
 import { getRandomColor } from "@/components/Chart ";
 import { AppContext } from "./Provider";
+import { useSelector } from "react-redux";
 
 const Budgets = () => {
-  const { budgets } = useContext(AppContext);
+  const budgets  = useSelector(state => state.finance.user.budgets);
 
   const chartData =
-    budgets.length > 0
+    budgets?.length > 0
       ? budgets.map((item) => {
           return {
             category: item.category,
@@ -30,12 +30,12 @@ const Budgets = () => {
           </Link>
         </div>
       </div>
-      {budgets.length > 0 ? (
-        <div className="flex flex-col justify-center lg:gap-48 lg:flex-row  ">
+      {budgets?.length > 0 ? (
+        <div className="flex flex-col justify-center lg:gap-48 lg:flex-row ">
           <Chart chartData={chartData} />
 
           <div className=" flex gap-2 lg:flex-col  p-4 text-[10px]">
-            {budgets.map((budget) => (
+            {budgets?.map((budget) => (
               <div key={budget.id} className="flex items-center gap-2">
                 <div className="w-1 h-[26px] bg-[#f2cdac]"></div>
                 <div>

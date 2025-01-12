@@ -1,8 +1,10 @@
 "use client";
 
 import { IoMdClose } from "react-icons/io";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import toast from "react-hot-toast";
+import {useDispatch} from "react-redux"
+import { addTransaction, setRecurringBills } from "@/lib/redux/slice ";
 
 export const transactionCategories = [
   {
@@ -47,7 +49,10 @@ export const transactionCategories = [
   },
 ];
 
-const AddTransaction = ({ setTransactionModalOpen, transactionsData, setTransactionsData }) => {
+const AddTransaction = ({ setTransactionModalOpen }) => {
+
+  const dispatch = useDispatch()
+
 
   const {
     register,
@@ -56,14 +61,9 @@ const AddTransaction = ({ setTransactionModalOpen, transactionsData, setTransact
   } = useForm({});
 
   const onSubmit = (data) => {
-    const newTransaction = {
-      ...data,
-      id: Math.floor(Math.random() * 1000),
-    };
-const allTransactions = [...transactionsData, newTransaction]
-    setTransactionsData(allTransactions);
+dispatch(addTransaction(data))
+dispatch(setRecurringBills)
     setTransactionModalOpen(false);
-
     toast.success("Transaction added successfully.");
   };
 

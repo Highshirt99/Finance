@@ -10,9 +10,13 @@ import { loginUser } from "@/lib/auth ";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/lib/redux/slice ";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch()
 
   const router = useRouter();
   const {
@@ -34,7 +38,7 @@ const Login = () => {
     },
     onSuccess: (data) => {
       toast.success(data.data?.message);
-      localStorage.setItem("account", data.data?.token);
+      dispatch(setUser(data.data?.token))
       router.push("/", { scroll: false });
     },
     onError: (error) => {

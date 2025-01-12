@@ -7,7 +7,6 @@ import Pagination from "./Pagination";
 import { AppContext } from "./Provider";
 
 const DataTable = ({
-  searchKeywordOnSubmitHandler,
   searchInputPlaceHolder,
   searchKeywordOnChangeHandler,
   searchKeyword,
@@ -93,7 +92,7 @@ const DataTable = ({
               <div className="flex flex-row justify-between w-full ">
                 <div className="w-full p-4 bg-white ">
                   <form
-                    // onSubmit={handleSearch}
+                   
                     className="flex items-center space-x-8 lg:justify-between "
                   >
                     <div className="relative ">

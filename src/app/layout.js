@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Provider from "@/components/Provider ";
+import AppProvider from "@/components/Provider ";
 
 export const metadata = {
   title: "Personal Finance App",
@@ -13,10 +13,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Provider>
+        <AppProvider>
           {children}
           <Toaster />
-        </Provider>
+        </AppProvider>
       </body>
     </html>
   );
