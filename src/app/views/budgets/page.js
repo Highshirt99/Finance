@@ -177,10 +177,8 @@ const Budgets = () => {
                                 : "text-[#5e9891]"
                             } flex items-center gap-1`}
                           >
-                            <span>{transaction.amount < 0 ? "-" : "+"}</span>
-                            <p className="font-semibold">
-                              ${transaction.amount.toFixed(2)}
-                            </p>
+                           <span>{transaction.amount < 0 ? "-" : "+"}</span>$
+                           {transaction.amount < 0 ? (Number(transaction.amount.slice(1))).toFixed(2) : Number(transaction.amount).toFixed(2)}
                           </div>
 
                           <p className="text-[#696868] text-[10px]">

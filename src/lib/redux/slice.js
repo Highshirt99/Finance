@@ -42,7 +42,7 @@ export const financeSlice = createSlice({
     state.user.budgets = state.user.budgets.filter((item) => item.id != action.payload)
   },
   setRecurringBills: (state,action) => {
-    state.user.recurringBills = state.user.transactions.filter((item) => item.recurring)
+    state.user.recurringBills = state.user.transactions.filter((item) => item.recurring )
   },
 }
 })

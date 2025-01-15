@@ -62,7 +62,7 @@ const AddTransaction = ({ setTransactionModalOpen }) => {
 
   const onSubmit = (data) => {
 dispatch(addTransaction(data))
-dispatch(setRecurringBills)
+dispatch(setRecurringBills())
     setTransactionModalOpen(false);
     toast.success("Transaction added successfully.");
   };

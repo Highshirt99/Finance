@@ -14,7 +14,7 @@ import { removeUser } from "@/lib/redux/slice ";
 
 export default function Home() {
   const router = useRouter();
-  const token = useSelector((state) => state.finance.token)
+  const token = useSelector((state) => state.finance.user.token)
 
   const dispatch = useDispatch()
 
