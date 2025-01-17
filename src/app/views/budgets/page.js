@@ -42,8 +42,8 @@ const Budgets = () => {
         })
       : [];
 
-  const handleShowMenu = (id) => {
-    setSelectedCategory(id);
+  const handleShowMenu = (budget) => {
+    setSelectedCategory(budget);
     setShowMenu(!showMenu);
   };
 
@@ -109,7 +109,7 @@ const Budgets = () => {
                   </div>
                   <BsThreeDots
                     onClick={() => {
-                      handleShowMenu(budget.id);
+                      handleShowMenu(budget);
                     }}
                     className="cursor-pointer"
                   />
@@ -192,7 +192,7 @@ const Budgets = () => {
                 </div>
                 <div
                   className={`${
-                    selectedCategory === budget.id && showMenu
+                    selectedCategory?.id === budget.id && showMenu
                       ? "flex "
                       : "hidden"
                   } shadow-md border w-[100px] text-[10px] absolute right-1 top-12 gap-3 hover p-4 rounded-md flex-col bg-white`}
@@ -224,9 +224,8 @@ const Budgets = () => {
                   <ConfirmDelete
                     setShowDeleteModal={setShowDeleteModal}
                     deleteItem={handleDeleteBudget}
-                    title={budget.category}
-                    name= "budget"
-                    item={budget}
+                    items={budgets}
+                    selectedItem = {selectedCategory}
                   />
                 )}
               </div>

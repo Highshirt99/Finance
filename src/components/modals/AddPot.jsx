@@ -2,7 +2,8 @@ import React from "react";
 import { IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-
+import { useDispatch } from "react-redux";
+import { addPot } from "@/lib/redux/slice ";
 
 const AddPot = ({ setPotModalOpen, pots, setPots }) => {
   const {
@@ -11,20 +12,13 @@ const AddPot = ({ setPotModalOpen, pots, setPots }) => {
     formState: { errors },
   } = useForm({});
 
+  const dispatch = useDispatch();
   const onSubmit = (data) => {
-    const newPot = {
-      ...data,
-      id: Math.floor(Math.random() * 1000),
-      saved: 0,
-    };
-const allPots = [...pots, newPot]
-    setPots(allPots);
-
+    dispatch(addPot(data));
     setPotModalOpen(false);
 
     toast.success("Pot added successfully.");
   };
-
 
   return (
     <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
@@ -45,11 +39,9 @@ const allPots = [...pots, newPot]
           className="flex flex-col gap-2 mt-2"
           onSubmit={handleSubmit(onSubmit)}
         >
-        
-
           <div>
             <label className="font-[600]  text-[12px] text-gray-400">
-            Pot Name
+              Pot Name
             </label>
             <input
               type="text"
@@ -67,7 +59,7 @@ const allPots = [...pots, newPot]
           </div>
           <div>
             <label className="font-[600]  text-[12px] text-gray-400">
-            Target Amount
+              Target Amount
             </label>
             <input
               type="number"

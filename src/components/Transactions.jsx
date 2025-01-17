@@ -24,7 +24,7 @@ const Transactions = () => {
           transactionsData.slice(0, 4).map((transaction) => (
             <div
               key={transaction.id}
-              className="flex items-center justify-between gap-3 p-4 "
+              className="flex items-center justify-between py-1 px-4 "
             >
               <div className="flex items-center gap-3">
                 <div className="bg-[#277c77] text-white flex justify-center items-center w-8 h-8 rounded-[50%] p-1">

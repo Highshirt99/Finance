@@ -1,53 +1,98 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {
-    token : null,
+    token: null,
     transactions: [],
     budgets: [],
     pots: [],
-    recurringBills: []
+    recurringBills: [],
   },
-}
+};
 
 export const financeSlice = createSlice({
-  name: 'finance',
+  name: "finance",
   initialState,
   reducers: {
     setUser: (state, action) => {
-
-      state.user.token= action.payload
+      state.user.token = action.payload;
     },
     removeUser: (state) => {
-      state.user.token = null
+      state.user.token = null;
     },
-   addTransaction: (state, action) => {
-    let data = action.payload
-    const newTransaction = {
+    addTransaction: (state, action) => {
+      let data = action.payload;
+      const newTransaction = {
         ...data,
         id: Math.floor(Math.random() * 1000),
       };
-  state.user.transactions = [...state.user?.transactions, newTransaction]
-   },
-   addBudget: (state,action) => {
-    let data = action.payload
-    const newBudget = {
-      ...data,
-      id: Math.floor(Math.random() * 1000),
-      spent: 0,
-  }
-  state.user.budgets = [...state.user?.budgets, newBudget]
-  },
-  deleteBudget: (state,action) => {
-    state.user.budgets = state.user.budgets.filter((item) => item.id != action.payload)
-  },
-  setRecurringBills: (state,action) => {
-    state.user.recurringBills = state.user.transactions.filter((item) => item.recurring )
-  },
-}
-})
+      state.user.transactions = [...state.user?.transactions, newTransaction];
+    },
+    addBudget: (state, action) => {
+      let data = action.payload;
+      const newBudget = {
+        ...data,
+        id: Math.floor(Math.random() * 1000),
+        spent: 0,
+      };
+      state.user.budgets = [...state.user?.budgets, newBudget];
+    },
 
+    editBudget: (state, action) => {
+      const { updatedBudget, id } = action.payload;
+      const index = state.user.budgets.findIndex((budget) => budget.id === id);
+      if (index !== -1) {
+        state.user.budgets[index] = {
+          ...state.user.budgets[index],
+          ...updatedBudget,
+        };
+      }
+    },
+    deleteBudget: (state, action) => {
+      state.user.budgets = state.user.budgets.filter(
+        (budget) => budget.id != action.payload
+      );
+    },
+    addPot: (state, action) => {
+      const newPot = {
+        ...action.payload,
+        id: Math.floor(Math.random() * 1000),
+        saved: 0,
+      };
 
-export const { setUser, removeUser, addTransaction, addBudget, deleteBudget, setRecurringBills } = financeSlice.actions
+      state.user.pots = [...state.user.pots, newPot];
+    },
 
-export default financeSlice.reducer
+    editPot: (state, action) => {
+      const { id, updatedPot } = action.payload;
+      const index = state.user.pots.findIndex((pot) => pot.id === id);
+
+      if (index !== -1) {
+        state.user.pots[index] = { ...state.user.pots[index], ...updatedPot };
+      }
+    },
+    deletePot: (state, action) => {
+    state.user.pots = state.user.pots.filter((pot) => pot.id != action.payload);
+    },
+    setRecurringBills: (state) => {
+      state.user.recurringBills = state.user.transactions.filter(
+        (item) => item.recurring
+      );
+    },
+  },
+});
+
+export const {
+  setUser,
+  removeUser,
+  addTransaction,
+  addBudget,
+  editBudget,
+  deleteBudget,
+  addPot,
+  editPot,
+  deletePot,
+  setRecurringBills,
+} = financeSlice.actions;
+
+export default financeSlice.reducer;

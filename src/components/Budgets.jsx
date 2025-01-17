@@ -2,7 +2,6 @@ import { MdArrowRight } from "react-icons/md";
 import Link from "next/link";
 import { Chart } from "@/components/Chart ";
 import { getRandomColor } from "@/components/Chart ";
-import { AppContext } from "./Provider";
 import { useSelector } from "react-redux";
 
 const Budgets = () => {

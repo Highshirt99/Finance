@@ -1,12 +1,13 @@
 "use client";
-import { useContext, useState } from "react";
-import { AppContext } from "@/components/Provider ";
+import { useState } from "react";
 import ConfirmDelete from "@/components/modals/ConfirmDelete ";
 import { BsThreeDots } from "react-icons/bs";
 import AddPot from "@/components/modals/AddPot ";
 import EditPot from "@/components/modals/EditPot ";
 import AddMoney from "@/components/modals/AddMoney ";
 import Withdraw from "@/components/modals/Withdraw ";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePot } from "@/lib/redux/slice ";
 
 const Pots = () => {
   const [potModalOpen, setPotModalOpen] = useState(false);
@@ -17,11 +18,12 @@ const Pots = () => {
   const [addMoneyModalOpen, setAddMoneyModalOpen] = useState(false);
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
 
-  
-  const { pots, setPots } = useContext(AppContext);
+  const pots = useSelector((state) => state.finance.user.pots);
 
-  const handleShowMenu = (id) => {
-    setSelectedPot(id);
+  const dispatch = useDispatch();
+
+  const handleShowMenu = (pot) => {
+    setSelectedPot(pot);
     setShowMenu(!showMenu);
   };
 
@@ -29,13 +31,12 @@ const Pots = () => {
     setEditPotModalOpen(id);
   };
 
-  const deletePot = (id) => {
-    const filtered = pots?.filter((item) => item.id !== id);
-    setPots(filtered);
+  const handleDeletePot = (id) => {
+    dispatch(deletePot(id));
     setShowDeleteModal(false);
   };
 
- 
+
   return (
     <div className="lg:relative  left-[17%]  lg:w-3/4 lg:px-0 px-6 py-6 lg:py-12 ">
       <div className="flex items-center justify-between px-4">
@@ -62,7 +63,7 @@ const Pots = () => {
                   </div>
                   <BsThreeDots
                     onClick={() => {
-                      handleShowMenu(pot.id);
+                      handleShowMenu(pot);
                     }}
                     className="cursor-pointer"
                   />
@@ -78,22 +79,22 @@ const Pots = () => {
                       </p>
                     </div>
                     <div className="w-full rounded-full h-[5px] my-4 bg-[#f8f4f0] relative">
-                <div
-                  className="absolute bg-green-600 h-[5px] rounded-full"
-                  style={{
-                    width: (pot.saved / pot.target* 100).toFixed(2) + "%",
-                  }}
-                />
-              </div>
+                      <div
+                        className="absolute bg-green-600 h-[5px] rounded-full"
+                        style={{
+                          width:
+                            ((pot.saved / pot.target) * 100).toFixed(2) + "%",
+                        }}
+                      />
+                    </div>
                     <div className="text-[10px] text-[#9d9a9b] flex justify-between my-4">
                       <span>
-                      {((pot.saved / pot.target) * 100).toFixed(2)}%
+                        {((pot.saved / pot.target) * 100).toFixed(2)}%
                       </span>
                       <span>Target of ${Number(pot.target).toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
-
                 <div className="flex gap-4 w-full font-bold mb-4 ">
                   <button
                     className="bg-[#9d9a9b] w-1/2 hover:bg-[#f8f4f0]  p-3 rounded-md cursor-pointer"
@@ -103,22 +104,24 @@ const Pots = () => {
                   >
                     + Add Money
                   </button>
-                  <button className="bg-[#9d9a9b] hover:bg-[#f8f4f0] w-1/2  p-3 rounded-md cursor-pointer"
+                  <button
+                    className="bg-[#9d9a9b] hover:bg-[#f8f4f0] w-1/2  p-3 rounded-md cursor-pointer"
                     onClick={() => {
                       setWithdrawModalOpen(true);
-                    }}>
+                    }}
+                  >
                     Withdraw
                   </button>
                 </div>
 
-              {  addMoneyModalOpen && (
+                {addMoneyModalOpen && (
                   <AddMoney
                     setAddMoneyModalOpen={setAddMoneyModalOpen}
                     pots={pots}
                     pot={pot}
                   />
                 )}
-              {  withdrawModalOpen && (
+                {withdrawModalOpen && (
                   <Withdraw
                     setWithdrawModalOpen={setWithdrawModalOpen}
                     pots={pots}
@@ -127,7 +130,7 @@ const Pots = () => {
                 )}
                 <div
                   className={`${
-                    selectedPot === pot.id && showMenu ? "flex " : "hidden"
+                    selectedPot?.id === pot.id && showMenu ? "flex " : "hidden"
                   } shadow-md border w-[100px] text-[10px] absolute right-1 top-12 gap-3 hover p-4 rounded-md flex-col bg-white`}
                 >
                   <button
@@ -156,14 +159,11 @@ const Pots = () => {
                 {showDeleteModal && (
                   <ConfirmDelete
                     setShowDeleteModal={setShowDeleteModal}
-                    deleteItem={deletePot}
-                    name="pot"
-                    item={pot}
-                    title={pot.name}
+                    deleteItem={handleDeletePot}
+                    items={pots}
+                    selectedItem = {selectedPot}
                   />
                 )}
-
-           
               </div>
             ))}
           </div>
@@ -174,13 +174,7 @@ const Pots = () => {
         </p>
       )}
 
-      {potModalOpen && (
-        <AddPot
-          pots={pots}
-          setPotModalOpen={setPotModalOpen}
-          setPots={setPots}
-        />
-      )}
+      {potModalOpen && <AddPot pots={pots} setPotModalOpen={setPotModalOpen} />}
     </div>
   );
 };

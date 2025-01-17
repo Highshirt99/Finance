@@ -3,23 +3,23 @@ import { IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { transactionCategories } from "./AddTransaction";
+import { useDispatch } from "react-redux";
+import { editBudget } from "@/lib/redux/slice ";
 
-const EditBudget = ({
-  setShowMenu,
-  setEditBudgetModalOpen,
-  budget,
-  budgets,
-}) => {
+const EditBudget = ({ setShowMenu, setEditBudgetModalOpen, budget }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({});
 
-  const onSubmit = (data) => {
-    const index = budgets.findIndex((item) => item.id === budget.id);
-    budgets[index] = { ...budget, ...data };
+  const dispatch = useDispatch();
 
+  const onSubmit = (data) => {
+    // const index = budgets.findIndex((item) => item.id === budget.id);
+    // budgets[index] = { ...budget, ...data };
+
+    dispatch(editBudget({ id: budget.id, updatedBudget: data }));
     setEditBudgetModalOpen(null);
     toast.success("Budget updated successfully.");
     setShowMenu(false);
@@ -35,7 +35,7 @@ const EditBudget = ({
             onClick={() => setEditBudgetModalOpen(false)}
           />
           <span className="text-[10px] text-[#a8b1be]">
-          As your budgets change, feel free to update your spending limits.
+            As your budgets change, feel free to update your spending limits.
           </span>
         </div>
 

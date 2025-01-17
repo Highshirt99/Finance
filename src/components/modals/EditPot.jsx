@@ -2,24 +2,19 @@ import React from "react";
 import { IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { editPot } from "@/lib/redux/slice ";
 
-
-const EditPot = ({
-  setShowMenu,
-  setEditPotModalOpen,
-  pot,
-  pots,
-}) => {
+const EditPot = ({ setShowMenu, setEditPotModalOpen, pot }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({});
 
+  const dispatch = useDispatch();
   const onSubmit = (data) => {
-    const index = pots.findIndex((item) => item.id === pot.id);
-    pots[index] = { ...pot, ...data };
-
+    dispatch(editPot({ id: pot.id, updatedPot: data }));
     setEditPotModalOpen(null);
     toast.success("Pot updated successfully.");
     setShowMenu(false);
@@ -35,7 +30,7 @@ const EditPot = ({
             onClick={() => setEditPotModalOpen(false)}
           />
           <span className="text-[10px] text-[#a8b1be]">
-          If your saving targets change, feel free to update your pots.
+            If your saving targets change, feel free to update your pots.
           </span>
         </div>
 
@@ -43,8 +38,6 @@ const EditPot = ({
           className="flex flex-col gap-2 mt-2"
           onSubmit={handleSubmit(onSubmit)}
         >
-       
-
           <div>
             <label className="font-[600]  text-[12px] text-gray-400">
               Pot Name
