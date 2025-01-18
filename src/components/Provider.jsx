@@ -14,9 +14,6 @@ export const AppContext = createContext();
 export default function AppProvider({ children }) {
   const [activeMenu, setActiveMenu] = useState(1);
   const [minimizeMenu, setMinimizeMenu] = useState(true);
-  const [budgets, setBudgets] = useState([]);
-  const [pots, setPots] = useState([]);
-  const [transactionsData, setTransactionsData] = useState([]);
   const [token, setToken] = useState(null);
 
   const queryClient = new QueryClient();
@@ -36,9 +33,7 @@ export default function AppProvider({ children }) {
         <body>
           <QueryClientProvider client={queryClient}>
             <AppContext.Provider value={{ token, setToken }}>
-              <Provider store={store}>
-              {children}
-              </Provider>
+              <Provider store={store}>{children}</Provider>
             </AppContext.Provider>
           </QueryClientProvider>
         </body>
@@ -47,31 +42,21 @@ export default function AppProvider({ children }) {
   }
 
   return (
-   
-      <QueryClientProvider client={queryClient}>
-        <AppContext.Provider
-          value={{
-            activeMenu,
-            setActiveMenu,
-            minimizeMenu,
-            setMinimizeMenu,
-            token,
-            setToken,
-            budgets,
-            setBudgets,
-            pots,
-            setPots,
-            transactionsData,
-            setTransactionsData
-          }}
-        >
-           <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <AppContext.Provider
+        value={{
+          activeMenu,
+          setActiveMenu,
+          minimizeMenu,
+          setMinimizeMenu,
+        }}
+      >
+        <Provider store={store}>
           <Sidebar />
           {children}
           <MobileSidebar />
-          </Provider>
-        </AppContext.Provider>
-      </QueryClientProvider>
-    
+        </Provider>
+      </AppContext.Provider>
+    </QueryClientProvider>
   );
 }

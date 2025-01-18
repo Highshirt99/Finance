@@ -129,7 +129,7 @@ const DataTable = ({
                       <div
                         className={`${
                           showSortList ? "block" : "hidden"
-                        } bg-white p-3 rounded-md absolute right-40 top-4 lg:right-80 text-gray-500  shadow-md border flex flex-col gap-1 w-[120px]`}
+                        } bg-white p-3 rounded-md absolute right-40 top-4 lg:right-80 text-gray-500  shadow-md border flex flex-col gap-1 w-[150px]`}
                       >
                         {sortList.map((item) => (
                           <p
@@ -167,7 +167,7 @@ const DataTable = ({
                       <div
                         className={`${
                           showFilterList ? "block" : "hidden"
-                        } bg-white p-3 rounded-md absolute  top-4 lg:right-20 text-gray-500  shadow-md border flex flex-col gap-1 w-[120px]`}
+                        } bg-white p-3 rounded-md absolute  top-4 lg:right-20 text-gray-500  shadow-md border flex flex-col gap-1 w-[150px]`}
                       >
                         {categories.map((item) => (
                           <p

@@ -86,13 +86,13 @@ const Transactions = () => {
       >
         {filteredCategory?.map((transaction) => (
           <tr key={transaction.id}>
-            <td className="px-5 bg-white border-b border-gray-200 py-5text-sm">
+            <td className="px-5 bg-white border-b border-gray-200 py-5 text-sm">
               <div className="flex items-center">
                 <div className="flex items-center gap-4">
                   <div className="bg-[#277c77] text-white text-[10px] flex justify-center items-center w-8 h-8 rounded-[50%] p-1">
                     <FaUser />
                   </div>
-                  <p className="font-bold text-gray-900 whitespace-no-wrap">
+                  <p className="font-bold text-gray-900 whitespace-no-wrap ">
                     {transaction.name}
                   </p>
                 </div>
