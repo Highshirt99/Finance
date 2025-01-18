@@ -36,7 +36,6 @@ const Pots = () => {
     setShowDeleteModal(false);
   };
 
-
   return (
     <div className="lg:relative  left-[17%]  lg:w-3/4 lg:px-0 px-6 py-6 lg:py-12 ">
       <div className="flex items-center justify-between px-4">
@@ -49,8 +48,8 @@ const Pots = () => {
         </button>
       </div>
       {pots?.length > 0 ? (
-        <div className="flex gap-8 max-md:flex-col my-12  ">
-          <div className="flex max-md:flex-col gap-4 w-full ">
+        <div className="flex gap-8 my-12 max-md:flex-col ">
+          <div className="flex w-full gap-4 max-md:flex-col ">
             {pots.map((pot) => (
               <div
                 key={pot.id}
@@ -59,7 +58,7 @@ const Pots = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-4 h-4 rounded-full bg-[#934f6f]" />
-                    <p className=" font-bold">{pot.name}</p>
+                    <p className="font-bold ">{pot.name}</p>
                   </div>
                   <BsThreeDots
                     onClick={() => {
@@ -95,19 +94,21 @@ const Pots = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-4 w-full font-bold mb-4 ">
+                <div className="flex w-full gap-4 mb-4 font-bold ">
                   <button
-                    className="bg-[#9d9a9b] w-1/2 hover:bg-[#f8f4f0]  p-3 rounded-md cursor-pointer"
+                    className="w-1/2 bg-[#f8f4f0] hover:bg-opacity-50  p-3 rounded-md cursor-pointer"
                     onClick={() => {
                       setAddMoneyModalOpen(true);
+                      setSelectedPot(pot)
                     }}
                   >
                     + Add Money
                   </button>
                   <button
-                    className="bg-[#9d9a9b] hover:bg-[#f8f4f0] w-1/2  p-3 rounded-md cursor-pointer"
+                    className="bg-[#f8f4f0] hover:bg-opacity-50  w-1/2  p-3 rounded-md cursor-pointer"
                     onClick={() => {
                       setWithdrawModalOpen(true);
+                       setSelectedPot(pot)
                     }}
                   >
                     Withdraw
@@ -118,14 +119,16 @@ const Pots = () => {
                   <AddMoney
                     setAddMoneyModalOpen={setAddMoneyModalOpen}
                     pots={pots}
-                    pot={pot}
+                    pot={selectedPot}
+                   
                   />
                 )}
                 {withdrawModalOpen && (
                   <Withdraw
                     setWithdrawModalOpen={setWithdrawModalOpen}
                     pots={pots}
-                    pot={pot}
+                    pot={selectedPot}
+                    
                   />
                 )}
                 <div
@@ -134,7 +137,7 @@ const Pots = () => {
                   } shadow-md border w-[100px] text-[10px] absolute right-1 top-12 gap-3 hover p-4 rounded-md flex-col bg-white`}
                 >
                   <button
-                    className="cursor-pointer border-b pb-2  font-bold"
+                    className="pb-2 font-bold border-b cursor-pointer"
                     onClick={() => {
                       handleEditPotModalOpen(pot.id);
                     }}
@@ -142,7 +145,7 @@ const Pots = () => {
                     Edit Pot
                   </button>
                   <button
-                    className="cursor-pointer text-red-500  font-bold"
+                    className="font-bold text-red-500 cursor-pointer"
                     onClick={() => setShowDeleteModal(true)}
                   >
                     Delete Pot
@@ -161,7 +164,7 @@ const Pots = () => {
                     setShowDeleteModal={setShowDeleteModal}
                     deleteItem={handleDeletePot}
                     items={pots}
-                    selectedItem = {selectedPot}
+                    selectedItem={selectedPot}
                   />
                 )}
               </div>
@@ -169,7 +172,7 @@ const Pots = () => {
           </div>
         </div>
       ) : (
-        <p className="text-center mt-4">
+        <p className="mt-4 text-center">
           You do not have any pot yet, create a new one.
         </p>
       )}

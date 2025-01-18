@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { withdrawMoney } from "@/lib/redux/slice ";
 
 const Withdraw = ({ setWithdrawModalOpen, pots, pot }) => {
   const [amount, setAmount] = useState(0);
@@ -11,25 +13,27 @@ const Withdraw = ({ setWithdrawModalOpen, pots, pot }) => {
     formState: { errors },
   } = useForm({});
 
-  const onSubmit = (data) => {
-    const index = pots.findIndex((item) => pot.id === item.id);
+  const dispatch = useDispatch();
 
-    if (pots[index].target - Number(amount) >= 0) {
-      pots[index].saved = pots[index].saved - Number(data.amount);
+  const onSubmit = (data) => {
+    const index = pots.findIndex((item) => pot?.id === item.id);
+
+    if (pots[index].saved - Number(amount) >= 0 ) {
+      dispatch(withdrawMoney({ data, pot }));
       setWithdrawModalOpen(false);
 
       toast.success("Money withdrawn successfully.");
-    } else if (pots[index].target - Number(amount) < 0) {
+      setAmount(0);
+    } else if (pots[index].saved - Number(amount) < 0) {
       toast.error("Amount exceeds balance.");
     }
-    setAmount(0);
+
   };
 
-  const myWidth = (pot.saved / pot.target* 100).toFixed(2) + "%";
-
+  const myWidth = ((pot.saved / pot.target) * 100).toFixed(2) + "%";
 
   return (
-    <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
+    <div className="backdrop-blur-sm overflow-scroll  max-md:mx-2 shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md  bottom-[80px] relative top-1">
         <div>
           <h1 className="font-[600]  text-[14px]">

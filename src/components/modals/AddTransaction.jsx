@@ -162,8 +162,8 @@ dispatch(setRecurringBills())
           </div>
 
           <div className="flex items-center gap-3 text-gray-600">
-            <label className="font-[600]  text-[12px] ">Recurring</label>
             <input type="checkbox" name="" id="" {...register("recurring")} />
+            <label className="font-[600]  text-[12px] ">Recurring</label>
           </div>
 
           <button className=" hover:bg-opacity-50 text-white ease-in-out duration-500 p-2 font-[500] mt-3 rounded-lg text-center text-[12px] bg-black cursor-pointer">

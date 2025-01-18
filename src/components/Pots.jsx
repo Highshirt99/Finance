@@ -1,23 +1,23 @@
 import { PiTipJarBold } from "react-icons/pi";
 import { MdArrowRight } from "react-icons/md";
 import Link from "next/link";
-import { useContext } from "react";
-import { AppContext } from "./Provider";
+
+import { useSelector } from "react-redux";
 
 const Pots = () => {
-  const {pots} = useContext(AppContext)
-  const total = pots.reduce((prev, curr) => prev + Number(curr.target), 0)
+  const pots = useSelector((state) => state.finance.user.pots);
+  const total = pots.reduce((prev, curr) => prev + curr.saved, 0)
   
   return (
     <div className="p-6 bg-white rounded-md h-fit">
       <div className="flex justify-between mb-4">
         <p className="text-[#201f24] font-bold text-[16px]">Pots</p>
-        <div className="flex items-center gap-2">
-          <p className="text-[#696868]">See Details</p>
-          <Link href="/views/pots">
+       
+        <Link href="/views/pots"  className="flex items-center gap-2 cursor-pointer" ><p className="text-[#696868]">See Details</p>
+     
             <MdArrowRight className="text-[#696868] text-[22px] " />
           </Link>
-        </div>
+    
       </div>
 
       <div className="flex flex-col space-4 lg:flex-row lg:items-center">
@@ -31,11 +31,11 @@ const Pots = () => {
         <div className="flex items-center gap-4 p-4">
          
         { pots.map((pot) => (
-          <div key = {pot.id} className="flex items-center gap-3 wrap">
-             <div className="w-1 h-[30px] lg:h-[60px] bg-[#9e2626]"></div>
-            <div>
+          <div key = {pot.id} className="flex items-center gap-1 wrap">
+             <div className="w-1 h-[20px] lg:h-[40px] bg-[#9e2626]"></div>
+            <div className="text-xs">
               <p className="text-[#696868] mb-1">{pot.name}</p>
-              <span className="text-[#201f24] font-bold">${pot.target}</span>
+              <span className="text-[#201f24] font-bold">${pot.saved}</span>
             </div>
           </div>
         )) }

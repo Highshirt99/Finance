@@ -11,12 +11,13 @@ const Transactions = () => {
     <div className="p-6 bg-white rounded-md h-fit ">
       <div className="flex justify-between ">
         <p className="text-[#201f24] font-bold text-[16px]">Transactions</p>
-        <div className="flex items-center gap-2">
+      
+        <Link href="/views/transactions" className="flex items-center gap-2 cursor-pointer">
           <p className="text-[#696868]">See Details</p>
-          <Link href="/views/transactions">
+          
             <MdArrowRight className="text-[#696868] text-[22px] " />
           </Link>
-        </div>
+       
       </div>
 
       <div className="flex flex-col gap-1">
@@ -24,7 +25,7 @@ const Transactions = () => {
           transactionsData.slice(0, 4).map((transaction) => (
             <div
               key={transaction.id}
-              className="flex items-center justify-between py-1 px-4 "
+              className="flex items-center justify-between px-4 py-1 "
             >
               <div className="flex items-center gap-3">
                 <div className="bg-[#277c77] text-white flex justify-center items-center w-8 h-8 rounded-[50%] p-1">

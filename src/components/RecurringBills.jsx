@@ -16,12 +16,13 @@ const RecurringBills = () => {
     <div className="p-3 mb-20 bg-white rounded-md lg:mb-0">
     <div className="flex justify-between ">
       <p className="text-[#201f24] font-bold text-[16px]">Recurring Bills</p>
-      <div className="flex items-center gap-2">
-        <p className="text-[#696868]">See Details</p>
-        <Link href="/views/transactions">
+     
+      <Link href="/views/transactions" className="flex items-center gap-2 cursor-pointer">
+        <p className="text-[#696868]  cursor-pointer">See Details</p>
+       
           <MdArrowRight className="text-[#696868] text-[22px] " />
         </Link>
-      </div>
+   
     </div>
 
   <div className="flex flex-col p-4 space-y-3">

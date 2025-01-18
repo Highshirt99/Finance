@@ -72,7 +72,23 @@ export const financeSlice = createSlice({
       }
     },
     deletePot: (state, action) => {
-    state.user.pots = state.user.pots.filter((pot) => pot.id != action.payload);
+      state.user.pots = state.user.pots.filter(
+        (pot) => pot.id != action.payload
+      );
+    },
+    addMoney: (state, action) => {
+      const { pot, data } = action.payload;
+      const pots = state.user.pots;
+      const index = pots.findIndex((item) => pot.id === item.id);
+
+      pots[index].saved = pots[index].saved + Number(data.amount);
+    },
+    withdrawMoney: (state, action) => {
+      const { pot, data } = action.payload;
+      const pots = state.user.pots;
+      const index = pots.findIndex((item) => pot.id === item.id);
+
+      pots[index].saved = pots[index].saved - Number(data.amount);
     },
     setRecurringBills: (state) => {
       state.user.recurringBills = state.user.transactions.filter(
@@ -92,6 +108,8 @@ export const {
   addPot,
   editPot,
   deletePot,
+  addMoney,
+  withdrawMoney,
   setRecurringBills,
 } = financeSlice.actions;
 

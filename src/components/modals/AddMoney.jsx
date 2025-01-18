@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { addMoney } from "@/lib/redux/slice ";
 
 const AddMoney = ({ setAddMoneyModalOpen, pots, pot }) => {
-  const myWidth = ((pot.saved / pot.target) * 100).toFixed(2) + "%";
+  const myWidth = ((pot?.saved / pot?.target) * 100).toFixed(2) + "%";
   const [amount, setAmount] = useState(0);
   const {
     register,
@@ -12,24 +14,29 @@ const AddMoney = ({ setAddMoneyModalOpen, pots, pot }) => {
     formState: { errors },
   } = useForm({});
 
+  const dispatch = useDispatch();
   const onSubmit = (data) => {
     const index = pots.findIndex((item) => pot.id === item.id);
 
-    if (pot.saved + Number(amount) <= pots[index].target) {
-      pots[index].saved = pots[index].saved + Number(data.amount);
+    if (
+      pot.saved + Number(amount) <= pots[index].target &&
+      Number(amount) > 0
+    ) {
+      dispatch(addMoney({ data, pot }));
       setAddMoneyModalOpen(false);
 
       toast.success("Money added successfully.");
+      setAmount(0);
+    } else if (Number(amount) < 0) {
+      toast.error("Amount must be greater than 0.");
     } else if (pot.saved + Number(amount) > pots[index].target) {
       toast.error("Amount exceeds target.");
     }
-    setAmount(0);
+ 
   };
 
-
-
   return (
-    <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
+    <div className="backdrop-blur-sm  max-md:mx-2 overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md  bottom-[80px] relative top-1">
         <div>
           <h1 className="font-[600]  text-[14px]">
@@ -82,7 +89,6 @@ const AddMoney = ({ setAddMoneyModalOpen, pots, pot }) => {
               {...register("amount", { required: true })}
               onChange={(e) => {
                 setAmount(e.target.value);
-              
               }}
               className={`${
                 errors.amount ? " border-red-600" : "border-gray-300 "

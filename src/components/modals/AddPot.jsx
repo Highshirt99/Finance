@@ -21,7 +21,7 @@ const AddPot = ({ setPotModalOpen, pots, setPots }) => {
   };
 
   return (
-    <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
+    <div className="backdrop-blur-sm max-md:mx-2 overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
       <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md  bottom-[80px] relative top-1">
         <div>
           <h1 className="font-[600]  text-[14px]">Add New Pot</h1>

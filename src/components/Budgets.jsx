@@ -22,12 +22,13 @@ const Budgets = () => {
     <div className="bg-white rounded-md h-fit">
       <div className="flex justify-between p-4">
         <p className="text-[#201f24] font-bold text-[16px]">Budgets</p>
-        <div className="flex items-center gap-2">
+       
+        <Link href="/views/transactions" className="flex items-center gap-2 cursor-pointer">
           <p className="text-[#696868]">See Details</p>
-          <Link href="/views/transactions">
+       
             <MdArrowRight className="text-[#696868] text-[22px] " />
           </Link>
-        </div>
+        
       </div>
       {budgets?.length > 0 ? (
         <div className="flex flex-col justify-center lg:gap-48 lg:flex-row ">
