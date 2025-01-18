@@ -27,7 +27,7 @@ export default function Home() {
   }, [router, token]);
 
   const logout = () => {
-    dispatch(removeUser);
+    dispatch(removeUser());
     router.push("/auth/login", { scroll: false });
   };
 
