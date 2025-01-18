@@ -77,7 +77,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col p-8 space-y-8 bg-white rounded-[20px] lg:w-[30%] lg:h-[70%] w-full">
+      <div className="flex flex-col p-8 space-y-8 bg-white rounded-[20px] lg:w-[30%] h-fit w-full">
         <h5 className="text-[2rem] font-bold">Login</h5>
         <form
           className="flex flex-col space-y-4"
