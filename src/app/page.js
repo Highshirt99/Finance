@@ -23,7 +23,7 @@ export default function Home() {
     if (!token) {
       router.push("/auth/login", { scroll: false });
     }
-    router.push("/", { scroll: false });
+  else {router.push("/", { scroll: false });}
   }, [router, token]);
 
   const logout = () => {
