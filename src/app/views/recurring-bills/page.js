@@ -4,13 +4,18 @@ import { BsReceiptCutoff } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import DataTable from "@/components/DataTable ";
 import { useDataTable } from "@/lib/data/useDataTable ";
-import {useSelector} from "react-redux"
-
+import { useSelector } from "react-redux";
+import { IoIosCheckmarkCircle } from "react-icons/io";
+import { RiErrorWarningFill } from "react-icons/ri";
 
 const RecurringBills = () => {
- const transactionsData  = useSelector(state => state.finance.user.transactios)
-  const recurringTransactions = useSelector((state) => state.finance.user.recurringBills)
-  
+  const transactionsData = useSelector(
+    (state) => state.finance.user.transactios
+  );
+  const recurringTransactions = useSelector(
+    (state) => state.finance.user.recurringBills
+  );
+
   const [filteredCategory, setFilteredCategory] = useState(
     recurringTransactions
   );
@@ -20,7 +25,7 @@ const RecurringBills = () => {
       item.name.toLowerCase().includes(keyword.toLowerCase())
     );
 
-    setFilteredCategory(filtered)
+    setFilteredCategory(filtered);
   };
 
   const handleSort = (sortType) => {
@@ -44,7 +49,19 @@ const RecurringBills = () => {
   };
 
   const total = recurringTransactions?.reduce((acc, curr) => {
-   return acc + Number(curr.amount)
+    return acc + Number(curr.amount);
+  }, 0);
+
+  const paidBills = recurringTransactions.filter((item) => item.amount > 0);
+
+  const totalPaidBills = paidBills?.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
+  }, 0);
+
+  const upcomingBills = recurringTransactions.filter((item) => item.amount < 0);
+
+  const totalUpcomingBills = upcomingBills?.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
   }, 0);
 
   const {
@@ -85,20 +102,20 @@ const RecurringBills = () => {
             <p className="mb-2">Summary</p>
             <div className="flex justify-between py-3 border-b">
               <span className="text-[#8c9095] text-[10px]">Paid Bills</span>
-              <span className="text-[#8f959a] text-[10px] font-bold">
-                ${total?.toFixed(2)}
+              <span className="text-black text-[10px] ">
+                ${totalPaidBills?.toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between py-3 border-b">
               <span className="text-[#8c9095] text-[10px]">Total Upcoming</span>
-              <span className="text-[#8f959a] text-[10px] font-bold">
-              $0.00
+              <span className="text-black text-[10px]">
+                ${Math.abs(totalUpcomingBills).toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between py-3 border-b">
-              <span className="text-[#8c9095] text-[10px]">Due Soon</span>
-              <span className="text-[#dd999b] text-[10px] font-bold">
-                $0.00
+              <span className="text-[#8f959a] text-[10px]">Due Soon</span>
+              <span className="text-red-600 text-[10px] ">
+                ${Math.abs(totalUpcomingBills).toFixed(2)}
               </span>
             </div>
           </div>
@@ -136,18 +153,31 @@ const RecurringBills = () => {
                   </div>
                 </td>
 
-                <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                  <p className="ml-1 text-gray-500 whitespace-no-wrap">
+                <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 ">
+                  <p className="ml-1 text-gray-500   flex items-center gap-3">
                     {new Date(transaction.date).toLocaleDateString("en-US", {
                       day: "numeric",
                       month: "short",
                       year: "numeric",
                     })}
+                      {transaction.amount > 0 ? (
+                    <IoIosCheckmarkCircle  className="text-[#277c77]" size={12}/>
+                  ) : (
+                    <RiErrorWarningFill  className="text-[#cb4d3d]" size={12}/>
+                  )}
                   </p>
+                
                 </td>
                 <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                  <p className="text-[#277c77] whitespace-no-wrap">
-                    ${transaction.amount}
+                  <p
+                    className={`${
+                      transaction.amount < 0 ? "text-red-500" : "text-black"
+                    } font-bold whitespace-no-wrap`}
+                  >
+                    $
+                    {transaction.amount < 0
+                      ? transaction.amount.slice(1)
+                      : transaction.amount}
                   </p>
                 </td>
               </tr>

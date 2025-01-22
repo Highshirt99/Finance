@@ -4,18 +4,14 @@ import { useSelector } from 'react-redux';
 const CurrentBalance = () => {
   const transactionsData = useSelector(state => state.finance.user?.transactions)
 
-    const totalTransaction = transactionsData.reduce(
+    const totalTransaction = transactionsData?.reduce(
       (prev, curr) => prev + Number(curr.amount),
       0
     );
 
     const getCurrentBalance = () => {
-      if(totalTransaction < 0){
-        return totalTransaction.toString().slice(1)
-      }
-      else{
-        return totalTransaction
-      }
+      
+        return Math.abs(totalTransaction)
     }
   return (
 

@@ -18,7 +18,13 @@ export const financeSlice = createSlice({
       state.user.token = action.payload;
     },
     removeUser: (state) => {
-      state.user.token = null;
+      state.user = {
+         token: null,
+    transactions: [],
+    budgets: [],
+    pots: [],
+    recurringBills: [],
+      }
     },
     addTransaction: (state, action) => {
       let data = action.payload;

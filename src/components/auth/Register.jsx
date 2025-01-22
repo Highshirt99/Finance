@@ -153,7 +153,9 @@ const Register = () => {
             )}
           </div>
 
-          <div className="w-full  p-3 flex items-center justify-center cursor-pointer bg-[#201f24] hover:bg-opacity-[0.7] rounded-md">
+          <div 
+          onClick = {() => handleSubmit(submitHandler)}
+          className="w-full  p-3 flex items-center justify-center cursor-pointer bg-[#201f24] hover:bg-opacity-[0.7] rounded-md">
             <button className="font-bold text-white border-none">
               Create Account
             </button>

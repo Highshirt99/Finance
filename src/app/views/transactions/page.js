@@ -113,7 +113,7 @@ const Transactions = () => {
               </p>
             </td>
             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-              <p className={`${transaction.amount < 0 ? "text-black" : "text-[#277c77]" } whitespace-no-wrap`}>
+              <p className={`${transaction.amount < 0 ? "text-black" : "text-[#277c77]" } semibold whitespace-no-wrap`}>
                 <span>{transaction.amount < 0 ? "-" : "+"}</span>$
                 {transaction.amount < 0 ? transaction.amount.slice(1) : transaction.amount}
               </p>

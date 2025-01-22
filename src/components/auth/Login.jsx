@@ -131,7 +131,10 @@ const Login = () => {
             )}
           </div>
           <div className="w-full p-3 flex items-center justify-center cursor-pointer bg-[#201f24] hover:bg-opacity-[0.7] rounded-md">
-            <button className="font-bold text-white border-none ">Login</button>
+            <button className="font-bold text-white border-none " onClick = {() => handleSubmit(submitHandler)}>
+              
+            Login
+            </button>
           </div>
         </form>
         <p className="text-[#8180b6] text-sm text-center">

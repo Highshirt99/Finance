@@ -7,10 +7,21 @@ const RecurringBills = () => {
    
   const recurringTransactions = useSelector((state) => state.finance.user.recurringBills)
   
+  const total = recurringTransactions?.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
+  }, 0);
 
-  const paidBills = recurringTransactions.reduce((acc, curr) => {
-    return acc + Number(curr.amount)
-   }, 0);
+  const paidBills = recurringTransactions.filter((item) => item.amount > 0);
+
+  const totalPaidBills = paidBills?.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
+  }, 0);
+
+  const upcomingBills = recurringTransactions.filter((item) => item.amount < 0);
+
+  const totalUpcomingBills = upcomingBills?.reduce((acc, curr) => {
+    return acc + Number(curr.amount);
+  }, 0);
 
   return (
     <div className="p-3 mb-20 bg-white rounded-md lg:mb-0">
@@ -28,15 +39,15 @@ const RecurringBills = () => {
   <div className="flex flex-col p-4 space-y-3">
       <div className="flex justify-between items-center w-full bg-[#f8f4f0] p-3 rounded-md border-l-2 border-l-[#3b8884]">
       <p className="text-[#a5afb7] text-[11px]">Paid Bills</p>
-      <span className="text-[#434247] text-[11px] font-bold">${paidBills.toFixed(2)}</span>
+      <span className="text-[#434247] text-[11px] font-bold">${totalPaidBills.toFixed(2)}</span>
       </div>
       <div className="flex justify-between items-center w-full bg-[#f8f4f0] p-3 rounded-md border-l-2 border-l-[#f2cdac]">
       <p className="text-[#a5afb7] text-[11px]">Total Upcoming</p>
-      <span className="text-[#434247] text-[11px]  font-bold">$0.00</span>
+      <span className="text-[#434247] text-[11px]  font-bold">${Math.abs(totalUpcomingBills).toFixed(2)}</span>
       </div>
       <div className="flex justify-between items-center w-full bg-[#f8f4f0] p-3 rounded-md border-l-2 border-l-[#82c9d7]">
       <p className="text-[#a5afb7] text-[11px]">Due Soon</p>
-      <span className="text-[#434247] text-[11px]  font-bold">$0.00</span>
+      <span className="text-[#434247] text-[11px]  font-bold">${Math.abs(totalUpcomingBills).toFixed(2)}</span>
       </div>
   </div>
   </div>

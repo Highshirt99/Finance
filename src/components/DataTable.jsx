@@ -123,7 +123,7 @@ const DataTable = ({
                         onClick={() => setShowSortList(!showSortList)}
                         className="border text-[9px] items-center p-2 rounded-md text-gray-500 hidden w-[120px] lg:flex justify-between cursor-pointer"
                       >
-                        <p>{sortType}</p>
+                        <p className = "text-black">{sortType}</p>
                         <FaAngleDown className="text-[16px]" />
                       </div>
                       <div
@@ -161,7 +161,7 @@ const DataTable = ({
                         onClick={() => setShowFilterList(!showFilterList)}
                         className="border text-[9px] items-center p-2 rounded-md text-gray-500 hidden w-[120px] lg:flex justify-between cursor-pointer"
                       >
-                        <p>{category}</p>
+                        <p className = "text-black">{category}</p>
                         <FaAngleDown className="text-[16px]" />
                       </div>    
                       <div
